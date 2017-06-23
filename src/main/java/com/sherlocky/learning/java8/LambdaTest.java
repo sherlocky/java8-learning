@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 /**
  * 测试兰姆达表达式的使用
- * 
+ * 		参考：http://www.tuicool.com/articles/iuUVFvN
  * @author zhangcx
  * @date 2017-06-23
  */
