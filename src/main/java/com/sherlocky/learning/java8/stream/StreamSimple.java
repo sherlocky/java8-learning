@@ -65,7 +65,6 @@ public class StreamSimple {
         // 比如 【2.forEach】里的用法
         System.out.println(numbers.stream().limit(2).collect(Collectors.toList()));
 
-        // TODO
         // 6.sorted 方法用于对流进行排序
         System.out.println("-------------6-----------");
         // 6.1 以下代码片段使用 sorted 方法对输出的 10 个随机数进行排序：
@@ -85,7 +84,6 @@ public class StreamSimple {
         System.out.println("-------------forEachOrdered-----------");
         ss.parallelStream().filter(s -> !s.isEmpty()).forEachOrdered(System.out::println);
 
-        // TODO
         // Collectors 类实现了很多归约操作
         System.out.println("-------------8-----------");
         // 8.1 将流转换成集合和聚合元素。Collectors 可用于返回列表或字符串：
