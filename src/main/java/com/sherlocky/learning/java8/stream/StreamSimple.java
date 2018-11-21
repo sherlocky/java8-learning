@@ -1,10 +1,10 @@
 package com.sherlocky.learning.java8.stream;
 
-import java.util.Arrays;
-import java.util.IntSummaryStatistics;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Java 8 API添加了一个新的抽象称为流Stream，可以让你以一种声明的方式处理数据。
@@ -102,6 +102,99 @@ public class StreamSimple {
         System.out.println("列表中最小的数 : " + stats.getMin());
         System.out.println("所有数之和 : " + stats.getSum());
         System.out.println("平均数 : " + stats.getAverage());
+
+        // 10.使用Stream初始化Map List
+        System.out.println("-------------10.使用Stream初始化Map List-----------");
+        // 10.1 Map
+        // stream法初始化map
+        Map mapByStream = Stream.of("id", "name", "birthday", "sex").collect(
+                Collectors.toMap(o -> o, integer -> integer, (o, o2) -> o2, HashMap::new));
+        System.out.println(mapByStream);
+        // 双括号初始化法
+        Map<String, String> mapByBrackets = new HashMap<String, String>() {{
+            put("key1", "value1");
+            put("key2", "value2");
+            put("keyN", "valueN");
+        }};
+        System.out.println(mapByBrackets);
+        // 10.2 List
+        // stream法
+        List listByStream = Stream.of(1, 2, 3, 4).collect(Collectors.toList());
+        System.out.println(listByStream);
+        // 双括号初始化法
+        List<String> listByBrackets = new ArrayList<String>() {{
+            add("string1");
+            add("string2");
+            add("stringN");
+        }};
+        System.out.println(listByBrackets);
+
+        //11. flatmap
+        /**
+         * 在Java 8中，Stream可以容纳不同的数据类型，例如：
+         *
+         * Stream<String[]>
+         * Stream<Set<String>>
+         * Stream<List<String>>
+         * Stream<List<Object>>
+         * 但是，Stream操作（filter，sum，distinct ...）和collectors不支持它，所以我们需要使用flatMap（）进行以下（扁平化）转换：
+         *
+         * Stream<String[]>		-> flatMap ->	Stream<String>
+         * Stream<Set<String>>	-> flatMap ->	Stream<String>
+         * Stream<List<String>>	-> flatMap ->	Stream<String>
+         * Stream<List<Object>>	-> flatMap ->	Stream<Object>
+         */
+        System.out.println("-------------11.flatmap-----------");
+        // 11.1
+        System.out.println("=================Stream<String[]>\t\t-> flatMap ->\tStream<String>=================");
+        String[] strsFlat = {"java8", "is", "easy", "to", "use"};
+        List<String> distinctStrsByFlatMap = Arrays.stream(strsFlat)
+                .map(str -> str.split(""))  // 映射成为Stream<String[]>
+                .flatMap(Arrays::stream)  // 扁平化为Stream<String>
+                .distinct()
+                .collect(Collectors.toList());
+        distinctStrsByFlatMap.forEach(s -> System.out.println(s));
+        // 11.2 对于原始类型，可以使用flatMapToInt
+        System.out.println("=================Stream<int[]>\t\t-> flatMap ->\tIntStream=================");
+        int[] intArray = {1, 2, 3, 4, 5, 6};
+        //1. Stream<int[]>
+        Stream<int[]> streamArray = Stream.of(intArray);
+        //2. Stream<int[]> -> flatMap -> IntStream
+        IntStream intStream = streamArray.flatMapToInt(Arrays::stream);//(x -> Arrays.stream(x));
+        intStream.forEach(x -> System.out.println(x));
+
+        // 12. reduce
+        System.out.println("-------------12.reduce-----------");
+        // 12.1 reduce操作可以实现从一组值中生成一个值
+         /**
+          * 如何通过reduce操作对Stream中的数字求和。以0作起点——一个空流
+          * Stream的求和结果，每一步都将Stream中的元素累加至accumulator，遍历至Stream中的
+          * 最后一个元素时，accumulator的值就是所有元素的和。**/
+        /**BinaryOperator reduce包含初始值和BinaryOperator函数接口**/
+        int count = Stream.of(1, 2, 3)
+                .reduce(0, (acc, element) -> acc + element);
+        System.out.println("1, 2, 3 累加 = " + count);
+        /**展开过程**/
+        BinaryOperator<Integer> accumulator = (acc, element) -> acc + element;
+        int anotherCount = accumulator.apply(
+                accumulator.apply(
+                        accumulator.apply(0, 1),
+                        2),
+                3);
+        System.out.println(anotherCount);
+        /**等同功能**/
+        int acc = 0;
+        for (Integer element : Arrays.asList(1, 2, 3)) {
+            acc = acc + element;
+        }
+        System.out.println(acc);
+        // 12.2 max和min: 其实包含了reduce功能：reduce(BinaryOperator.minBy(comparator));
+        System.out.println("min 方式求最短字符串：");
+        List<String> reduceList = Arrays.asList("Bakai", "Violets for Your Furs", "Time Was");
+        String shortestStr = reduceList.stream()
+                .min(Comparator.comparing(s -> s.length()))
+                .get();
+        System.out.println(shortestStr);
     }
     /**
     +--------------------+       +------+   +------+   +---+   +-------+
