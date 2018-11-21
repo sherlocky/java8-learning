@@ -110,7 +110,19 @@ public class StreamSimple {
         Map mapByStream = Stream.of("id", "name", "birthday", "sex").collect(
                 Collectors.toMap(o -> o, integer -> integer, (o, o2) -> o2, HashMap::new));
         System.out.println(mapByStream);
-        // 双括号初始化法
+        /**
+         * 双括号初始化法:
+         * 第一层花括号：首先对定义了一个继承自HashMap的匿名内部类
+         * 第二层花括号：则是一个自定义的对象构造块(称之为 非静态初始化块)
+         *
+         * 我们得到的 mapByBrackets 实际上是HashMap的子类的引用，但在功能上没有任何改变
+         * - 1.相比于常规标准方式进行初始化要简洁许多(但代码可读性相对会差)
+         * - 2.效率上来说可能不如标准的集合初始化。原因是使用双大括号会导致内部类文件的产生，而这个过程就会影响代码的执行效率
+         * - 3.双大括号初始化方法生成的.class文件要比常规方法多
+         * - 4.双大括号初始化方法运行时间要比常规方法长
+         * - 5.{{}}法，内部类引用中持有着外部类的引用。所以当串行化这个集合时外部类也会被不知不觉的串行化，如果外部类没有实现serialize接口时，就会报错
+         *      <p>解决办法：重新初始化为一个HashMap对象： new HashMap(mapByBrackets);这样就可以正常初始化了</p>
+         */
         Map<String, String> mapByBrackets = new HashMap<String, String>() {{
             put("key1", "value1");
             put("key2", "value2");
