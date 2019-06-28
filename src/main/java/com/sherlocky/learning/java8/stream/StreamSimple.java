@@ -149,7 +149,8 @@ public class StreamSimple {
          * - 3.这个内部类 ArrayList 不支持增删元素。
          * - 4.Arrays.asList 的参数如果是基本类型的数组时，需要留意返回值可能和你预期的不同。
          */
-        List<String> listByArrayAsList = Arrays.asList("a", "b", "c");
+        List<String> listByArrayAsList0 = Arrays.asList("a", "b", "c");
+        List<String> listByArrayAsList = new ArrayList<String>(Arrays.asList("a", "b", "c"));
         System.out.println(listByArrayAsList);
         // 下面的代码返回值是 List<int[]> 而不是 List<Integer>。
         List<int[]> intArrayList = Arrays.asList(new int[]{1, 2, 3});
