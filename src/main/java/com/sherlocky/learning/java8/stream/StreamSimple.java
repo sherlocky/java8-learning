@@ -130,6 +130,7 @@ public class StreamSimple {
             put("keyN", "valueN");
         }};
         System.out.println(mapByBrackets);
+
         // 10.2 List
         // stream法
         List listByStream = Stream.of(1, 2, 3, 4).collect(Collectors.toList());
@@ -141,6 +142,19 @@ public class StreamSimple {
             add("stringN");
         }};
         System.out.println(listByBrackets);
+        // Arrays.asList 法（除作为常量使用外，并不推荐！）
+        /**
+         * - 1.Arrays.asList 返回的是 Arrays 的静态内部类ArrayList（静态内部类不持有所在外部类的引用,而非静态内部类会持有外部类的引用）。
+         * - 2.这个内部类 ArrayList 继承自 AbstractList，实现了 RandomAccess，内部使用了一个数组来存储元素。
+         * - 3.这个内部类 ArrayList 不支持增删元素。
+         * - 4.Arrays.asList 的参数如果是基本类型的数组时，需要留意返回值可能和你预期的不同。
+         */
+        List<String> listByArrayAsList = Arrays.asList("a", "b", "c");
+        System.out.println(listByArrayAsList);
+        // 下面的代码返回值是 List<int[]> 而不是 List<Integer>。
+        List<int[]> intArrayList = Arrays.asList(new int[]{1, 2, 3});
+        // 如果是JDK9+ 还可以使用：
+        // List<String> list = Lists.newArrayList("a", "b", "c");
 
         //11. flatmap
         /**
