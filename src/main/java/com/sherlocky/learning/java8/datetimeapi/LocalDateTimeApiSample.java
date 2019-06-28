@@ -77,5 +77,36 @@ public class LocalDateTimeApiSample {
         // 等价于
         ZonedDateTime date2_ = ZonedDateTime.parse("2018-11-16T09:35:39+05:30[Asia/Shanghai]", DateTimeFormatter.ISO_ZONED_DATE_TIME);
         System.out.println("date2_: " + date2_);
+
+        // 3.Instant 用于表示一个时间戳，可以精确到纳秒（Nano-Second）
+        /**
+         * Instant.ofEpochSecond()
+         * 第一个参数为秒
+         * 第二个参数为纳秒，上面的代码表示从 1970-01-01 00:00:00 开始后两分钟（120秒）的10万纳秒的时刻。
+         */
+        // 1970-01-01T00:02:00.000100Z
+        Instant instant = Instant.ofEpochSecond(120, 100000);
+        System.out.println("======3 Instant.ofEpochSecond() 和 Instant.now() ======");
+        System.out.println(instant);
+        System.out.println(Instant.now());
+
+        // 4.Duration 内部实现与Instant类似，也是包含两部分：seconds表示秒，nanos表示纳秒。
+        /**
+         * 两者的区别是 Instant 用于表示一个时间戳（或者说是一个时间点），
+         * 而Duration表示一个时间段，所以Duration类中不包含now()静态方法。可以通过 Duration.between() 方法创建 Duration 对象
+         */
+        LocalDateTime from = LocalDateTime.of(2019, Month.MAY, 1, 8, 0, 0);    // 2019-05-01 08:00:00
+        LocalDateTime to = LocalDateTime.of(2019, Month.JUNE, 30, 10, 59, 59); // 2019-06-30 23:59:59
+        Duration duration = Duration.between(from, to);     // 表示从 2019-05-01 08:00:00 到 2019-06-30 23:59:59 这段时间
+
+        long days = duration.toDays();              // 这段时间的总天数
+        long hours = duration.toHours();            // 这段时间的小时数
+        long minutes = duration.toMinutes();        // 这段时间的分钟数
+        long seconds = duration.getSeconds();       // 这段时间的秒数
+        long milliSeconds = duration.toMillis();    // 这段时间的毫秒数
+        long nanoSeconds = duration.toNanos();      // 这段时间的纳秒数
+        System.out.println("======4 Duration.betweent() ======");
+        System.out.println(String.format("总天数:%s,小时数：%s，分钟数：%s，秒数：%s，毫秒数：%s，纳秒数：%s。",
+                days, hours, minutes, seconds, milliSeconds, nanoSeconds));
     }
 }
