@@ -108,5 +108,16 @@ public class LocalDateTimeApiSample {
         System.out.println("======4 Duration.betweent() ======");
         System.out.println(String.format("总天数:%s,小时数：%s，分钟数：%s，秒数：%s，毫秒数：%s，纳秒数：%s。",
                 days, hours, minutes, seconds, milliSeconds, nanoSeconds));
+
+        // 5.Period 在概念上和Duration类似，区别在于Period是以年月日来衡量一个时间段，比如2年3个月6天。
+        System.out.println("======4 Period.of() 和 Period.between() ======");
+        Period period = Period.of(2, 3, 6);
+        System.out.println(period);
+        // Period对象也可以通过between()方法创建，值得注意的是，由于Period是以年月日衡量时间段，所以between()方法只能接收LocalDate类型的参数：
+        // 2017-01-05 到 2017-03-05 这段时间
+        Period periodBetween = Period.between(
+                LocalDate.of(2017, 1, 5),
+                LocalDate.of(2017, 3, 5));
+        System.out.println(periodBetween);
     }
 }
