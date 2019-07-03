@@ -2,6 +2,12 @@ package com.sherlocky.learning.java8.lambda;
 
 /**
  *  lambdas 来实现 Runnable 接口
+ *
+ *  <p>
+ *  Lambda表达式并不是匿名内部类的语法糖，它是基于 invokedynamic 指令（java7引入的新指令），
+ *  在运行时使用 ASM 动态生成类文件来实现的，可以参考{@link java.lang.invoke.LambdaMetafactory#metafactory}。
+ *  </p>
+ *
  * @author zhangcx
  */
 public class LambdaSimpleInnerClazz {
