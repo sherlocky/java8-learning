@@ -25,7 +25,7 @@ import java.util.stream.Stream;
  * @author: zhangcx
  * @date: 2018/11/13 20:26
  */
-public class StreamSimple {
+public class StreamSample {
     public static void main(String[] args) {
         // 1.在 Java 8 中, 集合接口有两个方法来生成流：
         System.out.println("-------------1-----------");
