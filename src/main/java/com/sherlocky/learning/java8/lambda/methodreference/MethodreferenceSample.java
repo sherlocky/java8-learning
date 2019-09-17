@@ -18,7 +18,7 @@ import java.util.function.Supplier;
  *
  * @author zhangcx
  */
-public class MethodreferenceSimple {
+public class MethodreferenceSample {
     public static void main(String[] args) {
         /**
          * 在Java 8中，我们会使用Lambda表达式创建匿名方法，但是有时候，我们的Lambda表达式可能仅仅调用一个已存在的方法，
