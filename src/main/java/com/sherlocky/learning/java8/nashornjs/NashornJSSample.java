@@ -13,7 +13,7 @@ import javax.script.ScriptException;
  * @author: zhangcx
  * @date: 2018/11/15 15:17
  */
-public class NashornJSSimple {
+public class NashornJSSample {
     /**
      * 使用 ScriptEngineManager, JavaScript 代码可以在 Java 中执行
      */
