@@ -18,7 +18,7 @@ import java.util.function.Predicate;
  * - 3.函数式接口里允许定义 java.lang.Object 里的 public 方法
  *      这些方法对于函数式接口来说，不被当成是抽象方法（虽然它们是抽象方法）；因为任何一个函数式接口的实现，默认都继承了 Object 类，包含了来自 java.lang.Object 里对这些抽象方法的实现
  */
-public class FunctionalInterfaceSimple {
+public class FunctionalInterfaceSample {
     public static void main(String[] args) {
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
