@@ -16,7 +16,7 @@ package com.sherlocky.learning.java8.lambda;
  *
  * @author zhangcx
  */
-public class LambdaSimple1 {
+public class LambdaSample1 {
 
     public static void main(String[] args) {
         // 类型声明
@@ -32,10 +32,10 @@ public class LambdaSimple1 {
         // 没有大括号及返回语句
         MathOperation division = (int a, int b) -> a / b;
 
-        System.out.println("10 + 5 = " + LambdaSimple1.operate(10, 5, addition));
-        System.out.println("10 - 5 = " + LambdaSimple1.operate(10, 5, subtraction));
-        System.out.println("10 x 5 = " + LambdaSimple1.operate(10, 5, multiplication));
-        System.out.println("10 / 5 = " + LambdaSimple1.operate(10, 5, division));
+        System.out.println("10 + 5 = " + LambdaSample1.operate(10, 5, addition));
+        System.out.println("10 - 5 = " + LambdaSample1.operate(10, 5, subtraction));
+        System.out.println("10 x 5 = " + LambdaSample1.operate(10, 5, multiplication));
+        System.out.println("10 / 5 = " + LambdaSample1.operate(10, 5, division));
 
         // 不用括号
         GreetingService greetService1 = message -> System.out.println("Hello " + message);

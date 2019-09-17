@@ -5,7 +5,7 @@ package com.sherlocky.learning.java8.lambda;
  * - 2.在 Lambda 表达式当中不允许声明一个与局部变量同名的参数或者局部变量
  * @author zhangcx
  */
-public class LambdaSimple2 {
+public class LambdaSample2 {
 
     private static String HELLO = "Hello: ";
 

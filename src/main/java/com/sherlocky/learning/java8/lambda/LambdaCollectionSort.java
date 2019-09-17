@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSON;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class LambdaSimpleCollectionSort {
+public class LambdaCollectionSort {
     private static String[] players = {"Rafael Nadal", "Novak Djokovic",
             "Stanislas Wawrinka", "David Ferrer",
             "Roger Federer", "Andy Murray",

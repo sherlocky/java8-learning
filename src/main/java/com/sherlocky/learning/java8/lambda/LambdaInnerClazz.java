@@ -10,7 +10,7 @@ package com.sherlocky.learning.java8.lambda;
  *
  * @author zhangcx
  */
-public class LambdaSimpleInnerClazz {
+public class LambdaInnerClazz {
     public static void main(String[] args) {
         // java8之前的写法 匿名内部类
         new Thread(new Runnable() {
