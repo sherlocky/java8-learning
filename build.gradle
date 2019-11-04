@@ -21,8 +21,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.shekhargulati:strman:0.2.0'
-    implementation 'com.alibaba:fastjson:1.2.58'
+    implementation 'com.shekhargulati:strman:0.4.0'
+    implementation 'com.alibaba:fastjson:1.2.62'
+    implementation 'org.apache.commons:commons-lang3:3.9'
+
     // JMH 基准测试
     implementation 'org.openjdk.jmh:jmh-generator-annprocess:1.19'
 

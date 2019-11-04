@@ -1,6 +1,6 @@
 package com.sherlocky.learning.java8.lambda;
 
-import strman.Strman;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
@@ -27,7 +27,7 @@ public class LambdaSuccessorSample {
         System.out.println(function.apply(src));
 
         System.out.println(function.andThen(text -> {
-            return Strman.surround(text, "【", "】");
+            return StringUtils.join( "【", text, "】");
         }).apply(src));
     }
 }
