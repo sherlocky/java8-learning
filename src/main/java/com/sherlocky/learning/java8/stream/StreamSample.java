@@ -1,5 +1,8 @@
 package com.sherlocky.learning.java8.stream;
 
+import com.alibaba.fastjson.JSON;
+
+import java.security.SecureRandom;
 import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
@@ -68,7 +71,7 @@ public class StreamSample {
         // 6.sorted 方法用于对流进行排序
         System.out.println("-------------6-----------");
         // 6.1 以下代码片段使用 sorted 方法对输出的 10 个随机数进行排序：
-        Random random = new Random();
+        SecureRandom random = new SecureRandom();
         random.ints().limit(3).sorted().forEach(System.out::println);
 
         // 7. 并行（parallel）程序 parallelStream 是流并行处理程序的代替方法。
@@ -182,7 +185,14 @@ public class StreamSample {
                 .distinct()
                 .collect(Collectors.toList());
         distinctStrsByFlatMap.forEach(s -> System.out.println(s));
-        // 11.2 对于原始类型，可以使用flatMapToInt
+        // 11.2
+        System.out.println("=================Stream<List<String>>\t\t-> flatMap ->\tStream<String>=================");
+        List<String> listA = Arrays.asList(new String[]{"1", "2"});
+        List<String> listB = Arrays.asList(new String[]{"3", "4"});
+        // 1, 2, 3, 4
+        List<String> res = Stream.of(listA, listB).flatMap(Collection::stream).collect(Collectors.toList());
+        System.out.println(res);
+        // 11.3 对于原始类型，可以使用flatMapToInt
         System.out.println("=================Stream<int[]>\t\t-> flatMap ->\tIntStream=================");
         int[] intArray = {1, 2, 3, 4, 5, 6};
         //1. Stream<int[]>
@@ -223,6 +233,50 @@ public class StreamSample {
                 .min(Comparator.comparing(s -> s.length()))
                 .get();
         System.out.println(shortestStr);
+
+        // 13. groupby
+        System.out.println("-------------13.groupby-----------");
+        // 13.1 stream求分组最大对象
+        System.out.println("=================Stream求分组最大对象=================");
+        List<UserDTO> users = new ArrayList<>();
+        users.add(UserDTO.of(1L, "用户1", "男", 18, "group1"));
+        users.add(UserDTO.of(2L, "用户2", "男", 28, "group1"));
+        users.add(UserDTO.of(3L, "用户3", "女", 33, "group1"));
+        users.add(UserDTO.of(4L, "用户4", "男", 19, "group2"));
+        users.add(UserDTO.of(5L, "用户5", "女", 36, "group2"));
+        users.add(UserDTO.of(6L, "用户6", "女", 25, "group2"));
+        Map<String, UserDTO> usersGroupMaxAgeUserMap = users.stream().collect(
+                        // 根据classId分组
+                        Collectors.groupingBy(
+                                UserDTO::getGroup,
+                                //HashMap::new,
+                                Collectors.collectingAndThen(
+                                        Collectors.maxBy(Comparator.comparing(UserDTO::getAge)),
+                                        Optional::get
+                                )
+                        )
+        );
+        System.out.println(JSON.toJSON(usersGroupMaxAgeUserMap));
+        // 13.2 stream求分组对象某一属性平均值
+        System.out.println("=================Stream求分组对象某一属性平均值=================");
+        Map<String, Double> usersGroupAvgAgeMap = users.stream().collect(
+                Collectors.groupingBy(
+                        UserDTO::getGroup,
+                        Collectors.averagingInt(UserDTO::getAge)
+                )
+        );
+        System.out.println(JSON.toJSON(usersGroupAvgAgeMap));
+        // 13.3 stream多级分组
+        System.out.println("=================Stream多级分组=================");
+        Map<String, Map<String, List<UserDTO>>> usersGroupSexGroupMap = users.stream().collect(
+                Collectors.groupingBy(
+                        UserDTO::getGroup,
+                        Collectors.groupingBy(
+                                UserDTO::getSex
+                        )
+                )
+        );
+        System.out.println(JSON.toJSON(usersGroupSexGroupMap));
     }
     /**
     +--------------------+       +------+   +------+   +---+   +-------+
@@ -237,4 +291,84 @@ public class StreamSample {
                     .mapToInt(Widget::getWeight)
                     .sum();
      */
+}
+
+class UserDTO {
+    private Long id;
+    private String name;
+    private String sex;
+    private Integer age;
+    private String group;
+
+    public static UserDTO of(Long id, String name, String sex, Integer age, String group) {
+        return new UserDTO(id, name, sex, age, group);
+    }
+
+    public UserDTO() {
+    }
+
+    public UserDTO(Long id, String name, String sex, Integer age, String group) {
+        this.id = id;
+        this.name = name;
+        this.sex = sex;
+        this.age = age;
+        this.group = group;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        UserDTO userDTO = (UserDTO) o;
+        return Objects.equals(id, userDTO.id) && Objects.equals(name, userDTO.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }
